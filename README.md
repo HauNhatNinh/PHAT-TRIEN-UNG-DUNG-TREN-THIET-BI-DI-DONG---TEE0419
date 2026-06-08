@@ -592,3 +592,806 @@ Sau khi kết nối thành công:
 * Kiểm tra toàn bộ chức năng của ứng dụng trực tiếp trên thiết bị thật.
 <img width="1156" height="552" alt="Screenshot 2026-06-08 225103" src="https://github.com/user-attachments/assets/47d978a7-cc44-4668-a1c6-3685fa894af5" />
 
+# CÁCH TEST 2: Xuất file APK để cài đặt thật vào máy (Test độc lập)
+
+Phương pháp này được sử dụng khi ứng dụng đã hoàn thiện và cần cài đặt trực tiếp lên điện thoại Android hoặc chia sẻ cho người khác sử dụng.
+
+## Yêu cầu
+
+* Điện thoại sử dụng hệ điều hành Android.
+* Dự án đã được hoàn thành trên MIT App Inventor.
+* Có kết nối Internet để thực hiện quá trình biên dịch và tải file APK.
+
+---
+
+## Các bước thực hiện
+
+### 1. Biên dịch ứng dụng
+
+Trong giao diện MIT App Inventor:
+
+* Chọn menu **Build**
+* Chọn **Android App (.apk)**
+
+Hệ thống sẽ bắt đầu quá trình đóng gói ứng dụng.
+
+---
+
+### 2. Chờ quá trình biên dịch
+
+MIT App Inventor sẽ:
+
+* Tổng hợp giao diện (Designer)
+* Tổng hợp các khối lệnh (Blocks)
+* Đóng gói toàn bộ thành một file cài đặt Android (.apk)
+
+Thời gian thực hiện thường từ **1–2 phút**, tùy theo độ phức tạp của ứng dụng.
+
+---
+
+### 3. Tải file APK
+
+Sau khi biên dịch hoàn tất:
+
+* Hệ thống sẽ hiển thị một mã QR.
+* Đồng thời cung cấp liên kết tải trực tiếp file APK.
+
+Có thể lựa chọn một trong hai cách:
+
+#### Cách 1: Quét mã QR
+
+* Mở camera hoặc ứng dụng quét mã QR trên điện thoại.
+* Quét mã QR được hiển thị trên màn hình.
+* Điện thoại sẽ tự động tải file APK.
+
+#### Cách 2: Tải về máy tính
+
+* Chọn **Download .apk**
+* Lưu file APK về máy tính.
+* Chép sang điện thoại bằng cáp USB, Bluetooth hoặc các dịch vụ lưu trữ đám mây.
+
+---
+
+### 4. Cài đặt ứng dụng
+
+Sau khi tải xong:
+
+* Mở file APK trên điện thoại.
+* Chọn **Cài đặt (Install)**.
+
+Nếu Android hiển thị cảnh báo:
+
+> Cho phép cài đặt ứng dụng từ nguồn không xác định
+
+Thực hiện:
+
+* Chọn **Cài đặt từ nguồn này**
+* Hoặc **Cho phép**
+* Sau đó tiếp tục cài đặt.
+
+---
+
+### 5. Chạy ứng dụng
+
+Sau khi cài đặt hoàn tất:
+
+* Chọn **Mở (Open)**
+* Hoặc tìm biểu tượng ứng dụng ngoài màn hình chính.
+
+Ứng dụng sẽ hoạt động độc lập mà không cần kết nối với MIT App Inventor.
+
+---
+
+## Ưu điểm của việc xuất APK
+
+* Có thể sử dụng ứng dụng mọi lúc mà không cần kết nối MIT App Inventor.
+* Dễ dàng chia sẻ cho người khác.
+* Có thể lưu trữ lâu dài trên điện thoại.
+* Phù hợp cho việc nộp bài tập, trình diễn sản phẩm hoặc triển khai thực tế.
+
+---
+
+## Kết quả mong đợi
+
+Sau khi cài đặt thành công:
+
+* Ứng dụng xuất hiện trên màn hình điện thoại.
+* Có thể mở và sử dụng như một ứng dụng Android thông thường.
+* Hoạt động độc lập, không phụ thuộc vào trình duyệt hoặc MIT AI2 Companion.
+
+---
+
+# PHẦN 2: LÝ THUYẾT ANDROID STUDIO
+<img width="225" height="225" alt="image" src="https://github.com/user-attachments/assets/a3eaf171-5665-4cb0-b358-46879d99b2d4" />
+
+https://developer.android.com/?hl=vi
+
+## 1. AndroidManifest.xml và Quyền (Permissions)
+
+### AndroidManifest.xml là gì?
+<img width="642" height="513" alt="image" src="https://github.com/user-attachments/assets/eb18f351-c296-47a0-8764-92b73212e9cf" />
+
+`AndroidManifest.xml` là tập tin cấu hình quan trọng nhất của một ứng dụng Android. Có thể xem đây là "chứng minh thư" của ứng dụng, nơi khai báo:
+
+* Tên ứng dụng
+* Biểu tượng (Icon)
+* Các Activity (màn hình)
+* Các Service
+* Các Broadcast Receiver
+* Các quyền (Permissions) mà ứng dụng cần sử dụng
+
+### Khai báo quyền
+
+Ví dụ khai báo quyền truy cập Internet:
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+Thẻ này được đặt bên trong thẻ `<manifest>`.
+
+### Mục đích của Permissions
+
+* Cho hệ điều hành biết ứng dụng cần truy cập tài nguyên nào.
+* Bảo vệ quyền riêng tư của người dùng.
+* Hiển thị cảnh báo hoặc hộp thoại xin quyền khi cần thiết.
+
+---
+
+## 2. Vòng đời ứng dụng và hàm onCreate()
+
+### Vòng đời Activity
+
+Một Activity thông thường sẽ trải qua các trạng thái sau:
+
+```text
+onCreate()
+    ↓
+onStart()
+    ↓
+onResume()
+    ↓
+(Tương tác với người dùng)
+    ↓
+onPause()
+    ↓
+onStop()
+    ↓
+onDestroy()
+```
+
+### Hàm onCreate()
+
+Đây là hàm đầu tiên được Android gọi khi Activity được khởi tạo.
+
+Ví dụ:
+
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+}
+```
+
+### Vai trò của onCreate()
+
+* Gắn giao diện XML vào Activity.
+* Khởi tạo biến.
+* Ánh xạ View.
+* Thiết lập sự kiện.
+* Chuẩn bị dữ liệu ban đầu.
+
+Có thể xem `onCreate()` tương đương với hàm `main()` trong các chương trình Java cơ bản.
+
+---
+
+## 3. Xin quyền Runtime bằng Java
+
+Từ Android 6.0 (API 23) trở lên, ngoài việc khai báo trong Manifest, ứng dụng còn phải xin quyền khi đang chạy.
+
+Ví dụ kiểm tra quyền Camera:
+
+```java
+if (ContextCompat.checkSelfPermission(
+        this,
+        Manifest.permission.CAMERA)
+        != PackageManager.PERMISSION_GRANTED) {
+
+    ActivityCompat.requestPermissions(
+            this,
+            new String[]{Manifest.permission.CAMERA},
+            100);
+}
+```
+
+### Ý nghĩa
+
+* Kiểm tra xem quyền đã được cấp chưa.
+* Nếu chưa có quyền, hiển thị hộp thoại xin phép người dùng.
+* Người dùng có thể đồng ý hoặc từ chối.
+
+Việc này giúp tăng tính bảo mật và bảo vệ dữ liệu cá nhân.
+
+---
+
+## 4. Giao diện Android (XML Layout)
+
+### Thư mục Layout
+
+Các file giao diện được đặt trong:
+
+```text
+res/layout/
+```
+
+Ví dụ:
+
+```text
+activity_main.xml
+activity_login.xml
+activity_about.xml
+```
+
+---
+
+### Tham chiếu tài nguyên (Resources)
+
+Không nên ghi trực tiếp nội dung văn bản vào XML.
+
+#### Không khuyến khích
+
+```xml
+android:text="Xin chào"
+```
+
+#### Khuyến khích
+
+Trong file:
+
+```text
+res/values/strings.xml
+```
+
+```xml
+<string name="hello_msg">Xin chào</string>
+```
+
+Sau đó gọi:
+
+```xml
+android:text="@string/hello_msg"
+```
+
+---
+
+### Gọi trong Java
+
+```java
+getString(R.string.hello_msg);
+```
+
+Ví dụ:
+
+```java
+TextView tv = findViewById(R.id.tvHello);
+tv.setText(getString(R.string.hello_msg));
+```
+
+---
+
+### Ưu điểm
+
+* Dễ bảo trì.
+* Tránh lặp dữ liệu.
+* Hỗ trợ đa ngôn ngữ.
+* Hỗ trợ giao diện tối (Dark Mode).
+
+---
+
+### Auto Language
+
+Ví dụ:
+
+```text
+values/
+values-vi/
+values-en/
+```
+
+Android sẽ tự động chọn ngôn ngữ phù hợp theo thiết bị.
+
+---
+
+### Auto Theme
+
+Ví dụ:
+
+```text
+values/
+values-night/
+```
+
+Khi người dùng bật Dark Mode, Android sẽ tự động sử dụng tài nguyên trong thư mục `values-night`.
+
+---
+
+### LinearLayout
+
+Là một ViewGroup dùng để chứa các View khác.
+
+#### Sắp xếp theo chiều dọc
+
+```xml
+android:orientation="vertical"
+```
+
+#### Sắp xếp theo chiều ngang
+
+```xml
+android:orientation="horizontal"
+```
+
+---
+
+### Gravity
+
+Căn chỉnh nội dung bên trong Layout.
+
+Ví dụ:
+
+```xml
+android:gravity="center"
+```
+
+Các giá trị thường dùng:
+
+```text
+center
+left
+right
+top
+bottom
+center_horizontal
+center_vertical
+```
+
+---
+
+## 5. Tương tác với Layout bằng Code
+
+### Ánh xạ View
+
+Ví dụ:
+
+```java
+TextView myText =
+        findViewById(R.id.text_view_id);
+```
+
+### Thay đổi nội dung
+
+```java
+myText.setText(R.string.hello_msg);
+```
+
+Ưu điểm:
+
+* Không hardcode văn bản.
+* Android tự chọn ngôn ngữ phù hợp.
+* Dễ quản lý nội dung.
+
+---
+
+## 6. Sự kiện Click (Event Click)
+
+Android hỗ trợ nhiều cách xử lý sự kiện.
+
+---
+
+### Cách 1: Khai báo trong XML
+
+Trong Layout:
+
+```xml
+<Button
+    android:id="@+id/btnTinh"
+    android:onClick="tinhToan"
+    android:text="Tính" />
+```
+
+Trong Java:
+
+```java
+public void tinhToan(View v) {
+    // Xử lý sự kiện
+}
+```
+
+---
+
+### Cách 2: Đăng ký Listener bằng Java (Khuyến khích)
+
+Ánh xạ Button:
+
+```java
+Button btn =
+        findViewById(R.id.my_btn);
+```
+
+Gắn Listener:
+
+```java
+btn.setOnClickListener(
+    new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            // Thực hiện hành động
+
+        }
+    }
+);
+```
+
+### Ưu điểm
+
+* Dễ quản lý mã nguồn.
+* Tách biệt giao diện và logic.
+* Phù hợp với dự án lớn.
+* Dễ mở rộng và bảo trì.
+
+---
+
+## Kết luận
+
+Sau phần lý thuyết này cần nắm được:
+
+* Vai trò của AndroidManifest.xml.
+* Cách khai báo và xin quyền Runtime.
+* Vòng đời của Activity và hàm onCreate().
+* Cách xây dựng giao diện bằng XML.
+* Cách sử dụng tài nguyên Strings.
+* Khái niệm Layout và ViewGroup.
+* Cách tương tác với giao diện bằng Java.
+* Hai phương pháp xử lý sự kiện Click trong Android Studio.
+
+---
+
+# PHẦN 3: APP 1 - XỬ LÝ DỮ LIỆU TỪ THƯ MỤC ASSETS
+
+## 1. Kiến thức về Assets
+
+### Cú pháp truy cập
+
+```java
+AssetManager assetManager = getAssets();
+InputStream is = assetManager.open("ninh_data.txt");
+```
+
+### Lợi ích
+
+Đóng gói sẵn dữ liệu (Database ban đầu, file cấu hình, JSON, hình ảnh, âm thanh) trực tiếp vào file APK/AAB. App vẫn hoạt động bình thường, tải dữ liệu nhanh dù không có Internet.
+
+### Ứng dụng
+
+* App từ điển offline
+* App sách truyện
+* Cẩm nang du lịch
+* App chứa sẵn tệp trọng số (weights file) của mạng nơ-ron CNN
+
+---
+
+## 2. App 1: "Cẩm nang TNUT Offline"
+
+### Vấn đề đặt ra
+
+Sinh viên cần xem danh sách các phòng ban và thông báo nội bộ của trường nhưng mạng KTX đôi lúc không ổn định.
+
+### Dữ liệu
+
+File `cam_nang.json` được đặt trong thư mục:
+
+```text
+src/main/assets/
+```
+
+Dữ liệu tĩnh, có cấu trúc phân tầng.
+
+### Thuật toán xử lý
+
+1. Đọc dữ liệu từ file `cam_nang.json` bằng `InputStream`.
+2. Gom dữ liệu thành chuỗi `String`.
+3. Dùng `JSONObject` và `JSONArray` để bóc tách dữ liệu.
+
+### Hiển thị dữ liệu
+
+Sử dụng:
+
+* RecyclerView
+* CardView
+
+để hiển thị danh sách thông tin tối ưu và đẹp mắt.
+
+---
+
+# BƯỚC 1: TẠO THƯ MỤC ASSETS VÀ CHUẨN BỊ DỮ LIỆU
+
+## 1. Khởi tạo Project
+
+Tạo project Android Studio:
+
+* Empty Views Activity
+* Tên: `CamNangTNUT`
+* Ngôn ngữ: Java
+<img width="772" height="689" alt="Screenshot 2026-06-08 232310" src="https://github.com/user-attachments/assets/15642fe8-7467-4324-bcbd-087a74c8b3a9" />
+
+## 2. Tạo thư mục Assets
+
+```text
+app
+ └── New
+      └── Folder
+           └── Assets Folder
+```
+
+Sau khi tạo xong sẽ xuất hiện thư mục:
+
+```text
+app/src/main/assets
+```
+
+## 3. Tạo file JSON
+
+Tạo file:
+
+```text
+cam_nang.json
+```
+
+Nội dung:
+
+```json
+[
+  {
+    "tieu_de": "Văn phòng Khoa Điện tử",
+    "noi_dung": "Nơi hỗ trợ các vấn đề học tập cho sinh viên KMT."
+  },
+  {
+    "tieu_de": "Phòng Đào tạo TNUT",
+    "noi_dung": "Tầng 1 Toà nhà Trung tâm. Giải đáp thắc mắc về tín chỉ, học phí."
+  },
+  {
+    "tieu_de": "Ký túc xá TNUT",
+    "noi_dung": "Khu vực lưu trú của sinh viên. Báo cáo hỏng hóc cơ sở vật chất tại Ban Quản lý."
+  }
+]
+```
+
+---
+
+# BƯỚC 2: THIẾT KẾ GIAO DIỆN (XML)
+
+## activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cẩm nang Sinh Viên"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCamNang"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>
+```
+
+## item_cam_nang.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvTieuDe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/tvNoiDung"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:textColor="#555555" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+```
+
+---
+
+# BƯỚC 3: TẠO MODEL VÀ ADAPTER
+
+## CamNang.java
+
+```java
+package com.example.camnangtnut;
+
+public class CamNang {
+    private String tieuDe;
+    private String noiDung;
+
+    public CamNang(String tieuDe, String noiDung) {
+        this.tieuDe = tieuDe;
+        this.noiDung = noiDung;
+    }
+
+    public String getTieuDe() { return tieuDe; }
+    public String getNoiDung() { return noiDung; }
+}
+```
+
+## CamNangAdapter.java
+
+```java
+package com.example.camnangtnut;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
+
+public class CamNangAdapter extends RecyclerView.Adapter<CamNangAdapter.ViewHolder> {
+
+    private List<CamNang> listData;
+
+    public CamNangAdapter(List<CamNang> listData) {
+        this.listData = listData;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_cam_nang, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        CamNang item = listData.get(position);
+        holder.tvTieuDe.setText(item.getTieuDe());
+        holder.tvNoiDung.setText(item.getNoiDung());
+    }
+
+    @Override
+    public int getItemCount() {
+        return listData.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvTieuDe, tvNoiDung;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvTieuDe = itemView.findViewById(R.id.tvTieuDe);
+            tvNoiDung = itemView.findViewById(R.id.tvNoiDung);
+        }
+    }
+}
+```
+
+---
+
+# BƯỚC 4: MAIN ACTIVITY
+
+## MainActivity.java
+
+```java
+package com.example.camnangtnut;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView rvCamNang;
+    private CamNangAdapter adapter;
+    private List<CamNang> danhSachCamNang;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        rvCamNang = findViewById(R.id.rvCamNang);
+        rvCamNang.setLayoutManager(new LinearLayoutManager(this));
+
+        danhSachCamNang = new ArrayList<>();
+
+        docDuLieuTuAssets();
+
+        adapter = new CamNangAdapter(danhSachCamNang);
+        rvCamNang.setAdapter(adapter);
+    }
+
+    private void docDuLieuTuAssets() {
+        try {
+            InputStream is = getAssets().open("cam_nang.json");
+
+            int size = is.available();
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+            is.close();
+
+            String jsonChuoi = new String(buffer, "UTF-8");
+
+            JSONArray jsonArray = new JSONArray(jsonChuoi);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj = jsonArray.getJSONObject(i);
+
+                String tieuDe = obj.getString("tieu_de");
+                String noiDung = obj.getString("noi_dung");
+
+                danhSachCamNang.add(
+                        new CamNang(tieuDe, noiDung)
+                );
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+---
+
+# BƯỚC 5: CHẠY THỬ
+
+Ứng dụng hoạt động hoàn toàn **offline**, đọc dữ liệu trực tiếp từ thư mục **Assets**, không cần kết nối Internet và đáp ứng yêu cầu xử lý dữ liệu JSON cục bộ trên Android.
+
