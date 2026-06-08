@@ -1,6 +1,6 @@
 # MÔN HỌC: PHÁT TRIỂN ỨNG DỤNG TRÊN THIẾT BỊ DI ĐỘNG - TEE0419
 ---
-# PHẦN 1: MIT APP INVENTOR (Quy trình tạo phần mềm)
+# PHẦN 1: Viết phần mềm trên công cụ MIT APP INVENTOR
 <img width="1917" height="1025" alt="image" src="https://github.com/user-attachments/assets/9ca2604d-4b4d-4c3c-8e6f-06d616dbace4" />
 
 ## 1. Khái quát giao diện (Thanh công cụ, Kéo thả & Thuộc tính)
