@@ -1063,94 +1063,55 @@ Sau phần lý thuyết này cần nắm được:
 
 ## 1. Kiến thức về Assets
 
-### Cú pháp truy cập
+### Cú pháp truy cập:
 
 ```java
 AssetManager assetManager = getAssets();
 InputStream is = assetManager.open("ninh_data.txt");
 ```
 
-### Lợi ích
+Lợi ích: Đóng gói sẵn dữ liệu (Database ban đầu, file cấu hình, JSON, hình ảnh, âm thanh) trực tiếp vào file APK/AAB. App vẫn hoạt động bình thường, load cực nhanh dù không có Internet.
 
-Đóng gói sẵn dữ liệu (Database ban đầu, file cấu hình, JSON, hình ảnh, âm thanh) trực tiếp vào file APK/AAB. App vẫn hoạt động bình thường, tải dữ liệu nhanh dù không có Internet.
-
-### Ứng dụng
-
-* App từ điển offline
-* App sách truyện
-* Cẩm nang du lịch
-* App chứa sẵn tệp trọng số (weights file) của mạng nơ-ron CNN
-
----
+Ứng dụng: Làm app từ điển offline, app sách truyện, cẩm nang du lịch, hoặc app chứa sẵn tệp trọng số (weights file) của mạng nơ-ron CNN.
 
 ## 2. App 1: "Cẩm nang TNUT Offline"
 
-### Vấn đề đặt ra
+Vấn đề đặt ra: Sinh viên cần xem danh sách các phòng ban và thông báo nội bộ của trường, nhưng mạng KTX đôi lúc chập chờn.
 
-Sinh viên cần xem danh sách các phòng ban và thông báo nội bộ của trường nhưng mạng KTX đôi lúc không ổn định.
+Dữ liệu (Đặc thù): File cam_nang.json chứa cấu trúc danh sách, được copy sẵn vào thư mục src/main/assets/. Dữ liệu tĩnh, có cấu trúc phân tầng.
 
-### Dữ liệu
+Thuật toán xử lý:
 
-File `cam_nang.json` được đặt trong thư mục:
+1. Đọc luồng byte (InputStream) từ file cam_nang.json.
+2. Sử dụng vòng lặp StringBuilder để gom các byte lại thành chuỗi String hoàn chỉnh.
+3. Dùng lớp JSONObject và JSONArray để tiền xử lý, bóc tách chuỗi String đó thành danh sách các Object thực thể trong Java.
 
-```text
-src/main/assets/
-```
-
-Dữ liệu tĩnh, có cấu trúc phân tầng.
-
-### Thuật toán xử lý
-
-1. Đọc dữ liệu từ file `cam_nang.json` bằng `InputStream`.
-2. Gom dữ liệu thành chuỗi `String`.
-3. Dùng `JSONObject` và `JSONArray` để bóc tách dữ liệu.
-
-### Hiển thị dữ liệu
-
-Sử dụng:
-
-* RecyclerView
-* CardView
-
-để hiển thị danh sách thông tin tối ưu và đẹp mắt.
+Đối tượng hiển thị: Sử dụng RecyclerView kết hợp với CardView để hiển thị danh sách các mục thật đẹp mắt, tối ưu bộ nhớ khi cuộn màn hình.
 
 ---
 
+Dưới đây là 5 bước để hiện thực hóa ứng dụng này:
+
 # BƯỚC 1: TẠO THƯ MỤC ASSETS VÀ CHUẨN BỊ DỮ LIỆU
 
-## 1. Khởi tạo Project
+## 1. Khởi tạo Project:
 
-Tạo project Android Studio:
+Mở Android Studio, tạo một dự án mới (Empty Views Activity), đặt tên là CamNangTNUT, ngôn ngữ chọn Java.
+<img width="772" height="689" alt="Screenshot 2026-06-08 232310" src="https://github.com/user-attachments/assets/db19647e-003e-4d47-a505-9cbe893ae9a7" />
 
-* Empty Views Activity
-* Tên: `CamNangTNUT`
-* Ngôn ngữ: Java
-<img width="772" height="689" alt="Screenshot 2026-06-08 232310" src="https://github.com/user-attachments/assets/15642fe8-7467-4324-bcbd-087a74c8b3a9" />
+## 2. Tạo thư mục Assets:
 
-## 2. Tạo thư mục Assets
+Trong cửa sổ Project bên trái (để chế độ xem là Android), nhấn chuột phải vào thư mục app -> Chọn New -> Folder -> Assets Folder.
+<img width="1919" height="1079" alt="Screenshot 2026-06-08 232906" src="https://github.com/user-attachments/assets/2ed7212c-0f71-41ea-a72a-bccf9a80177a" />
 
-```text
-app
- └── New
-      └── Folder
-           └── Assets Folder
-```
+Một hộp thoại hiện ra, cứ giữ nguyên các tùy chọn mặc định và bấm Finish. Thư mục assets màu vàng sẽ xuất hiện bên trong thư mục main.
+<img width="304" height="275" alt="Screenshot 2026-06-08 232932" src="https://github.com/user-attachments/assets/f4dab844-c441-49a5-b31c-04b60fa6dfbc" />
 
-Sau khi tạo xong sẽ xuất hiện thư mục:
+## 3. Tạo file dữ liệu JSON:
 
-```text
-app/src/main/assets
-```
+Nhấn chuột phải vào thư mục assets vừa tạo -> New -> File. Đặt tên là cam_nang.json.
 
-## 3. Tạo file JSON
-
-Tạo file:
-
-```text
-cam_nang.json
-```
-
-Nội dung:
+Mở file này lên và dán đoạn dữ liệu chuẩn bị trước này vào (đây là định dạng JSON rất phổ biến):
 
 ```json
 [
@@ -1168,12 +1129,15 @@ Nội dung:
   }
 ]
 ```
-
----
+<img width="1919" height="1079" alt="Screenshot 2026-06-08 233327" src="https://github.com/user-attachments/assets/81415ded-dc2a-4469-b136-5114919352c7" />
 
 # BƯỚC 2: THIẾT KẾ GIAO DIỆN (XML)
 
-## activity_main.xml
+Chúng ta cần 2 file giao diện: 1 cho màn hình chính, 1 cho từng thẻ thông tin (Card) hiển thị trong danh sách.
+
+## 1. File màn hình chính (res/layout/activity_main.xml):
+
+Thay thế toàn bộ code cũ bằng code sau để tạo một danh sách cuộn RecyclerView:
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -1199,8 +1163,12 @@ Nội dung:
         android:layout_height="match_parent" />
 </LinearLayout>
 ```
+<img width="1919" height="1079" alt="Screenshot 2026-06-08 233756" src="https://github.com/user-attachments/assets/d7941418-b315-4b8c-93e0-5b97876b24c3" />
 
-## item_cam_nang.xml
+## 2. File thiết kế từng thẻ thông tin (res/layout/item_cam_nang.xml):
+
+Chuột phải vào thư mục res/layout -> New -> Layout Resource File -> Đặt tên là item_cam_nang.
+<img width="1025" height="628" alt="Screenshot 2026-06-08 234026" src="https://github.com/user-attachments/assets/3a233dd7-fbdd-40dd-a7a2-86b67c3efda5" />
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -1236,16 +1204,18 @@ Nội dung:
     </LinearLayout>
 </androidx.cardview.widget.CardView>
 ```
+<img width="1919" height="1079" alt="Screenshot 2026-06-08 234047" src="https://github.com/user-attachments/assets/28dddda9-cbd2-463d-b35d-2e2adbaf2bb0" />
 
----
+# BƯỚC 3: TẠO CLASS MODEL VÀ ADAPTER (XỬ LÝ DỮ LIỆU)
 
-# BƯỚC 3: TẠO MODEL VÀ ADAPTER
+Để RecyclerView hoạt động, nó cần một "bộ chuyển đổi" (Adapter) để nhét dữ liệu từ Java vào giao diện XML.
 
-## CamNang.java
+## 1. Tạo Model Class (CamNang.java):
+
+Chuột phải vào thư mục package chứa code Java của ngài -> New -> Java Class -> Đặt tên CamNang.
 
 ```java
 package com.example.camnangtnut;
-
 public class CamNang {
     private String tieuDe;
     private String noiDung;
@@ -1259,12 +1229,14 @@ public class CamNang {
     public String getNoiDung() { return noiDung; }
 }
 ```
+<img width="1919" height="1079" alt="Screenshot 2026-06-08 234651" src="https://github.com/user-attachments/assets/906d7a05-be78-4666-80a7-b3c3ec5f03e4" />
 
-## CamNangAdapter.java
+## 2. Tạo Adapter (CamNangAdapter.java):
+
+Tạo Class mới tên CamNangAdapter. Đoạn code này khá tiêu chuẩn, ngài chỉ cần sao chép và dán:
 
 ```java
 package com.example.camnangtnut;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1284,13 +1256,14 @@ public class CamNangAdapter extends RecyclerView.Adapter<CamNangAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_cam_nang, parent, false);
+        // Gắn layout item_cam_nang.xml vào mỗi dòng
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cam_nang, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Lấy dữ liệu và đổ vào UI
         CamNang item = listData.get(position);
         holder.tvTieuDe.setText(item.getTieuDe());
         holder.tvNoiDung.setText(item.getNoiDung());
@@ -1303,7 +1276,6 @@ public class CamNangAdapter extends RecyclerView.Adapter<CamNangAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTieuDe, tvNoiDung;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTieuDe = itemView.findViewById(R.id.tvTieuDe);
@@ -1312,25 +1284,20 @@ public class CamNangAdapter extends RecyclerView.Adapter<CamNangAdapter.ViewHold
     }
 }
 ```
+<img width="1919" height="1079" alt="Screenshot 2026-06-08 235011" src="https://github.com/user-attachments/assets/e6f69c3e-a1c7-41df-a9fd-0fe3b384ecec" />
 
----
+# BƯỚC 4: GHÉP NỐI TẠI MAIN ACTIVITY (THUẬT TOÁN LÕI)
 
-# BƯỚC 4: MAIN ACTIVITY
-
-## MainActivity.java
+Đây là nơi đọc file từ assets và hiển thị lên màn hình. Mở file MainActivity.java và viết code như sau:
 
 ```java
 package com.example.camnangtnut;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -1351,47 +1318,102 @@ public class MainActivity extends AppCompatActivity {
 
         danhSachCamNang = new ArrayList<>();
 
+        // 1. Thực thi hàm đọc và xử lý dữ liệu
         docDuLieuTuAssets();
 
+        // 2. Cài đặt Adapter cho RecyclerView
         adapter = new CamNangAdapter(danhSachCamNang);
         rvCamNang.setAdapter(adapter);
     }
 
+    // THUẬT TOÁN XỬ LÝ DỮ LIỆU JSON
     private void docDuLieuTuAssets() {
         try {
+            // Mở luồng đọc file từ thư mục assets
             InputStream is = getAssets().open("cam_nang.json");
 
+            // Tính toán kích thước file và đưa vào bộ đệm byte
             int size = is.available();
             byte[] buffer = new byte[size];
-
             is.read(buffer);
             is.close();
 
+            // Chuyển mảng byte thành chuỗi String (UTF-8)
             String jsonChuoi = new String(buffer, "UTF-8");
 
+            // Phân tích chuỗi JSON thành mảng (Array)
             JSONArray jsonArray = new JSONArray(jsonChuoi);
 
+            // Vòng lặp bóc tách từng đối tượng và nhét vào List của Java
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
-
                 String tieuDe = obj.getString("tieu_de");
                 String noiDung = obj.getString("noi_dung");
 
-                danhSachCamNang.add(
-                        new CamNang(tieuDe, noiDung)
-                );
+                danhSachCamNang.add(new CamNang(tieuDe, noiDung));
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Bắt lỗi nếu file không tồn tại hoặc sai định dạng JSON
         }
     }
 }
 ```
+<img width="1919" height="1079" alt="Screenshot 2026-06-08 235107" src="https://github.com/user-attachments/assets/b8a457cd-fcca-4b90-98de-baf37b0a6def" />
+
+# BƯỚC 5: CHẠY THỬ VÀ TẬN HƯỞNG
+Ứng dụng này hoàn toàn Offline, giải quyết triệt để yêu cầu đọc file từ Assets, không cần bất kỳ đường truyền mạng nào!
+## CÁCH 1: Tạo máy ảo (Emulator) ngay trên máy tính
+
+Sẽ tạo ra một chiếc "điện thoại giả" nằm ngay trên màn hình máy tính để xem app.
+
+### Bước 1:
+Nhìn lên thanh công cụ trên cùng của Android Studio, tìm và bấm vào biểu tượng Device Manager (thường có hình một chiếc điện thoại nhỏ với logo Android, hoặc nằm ở thanh viền mép bên phải màn hình).
+
+<img width="283" height="379" alt="Screenshot 2026-06-08 235519" src="https://github.com/user-attachments/assets/2f2a0169-8d0e-42be-8f8d-7669d9ca6a68" />
+
+### Bước 2:
+Một bảng điều khiển hiện ra, bấm vào nút Create device (Tạo thiết bị) hoặc biểu tượng dấu cộng +.
+
+<img width="292" height="169" alt="Screenshot 2026-06-08 235613" src="https://github.com/user-attachments/assets/f7100a2f-df89-47c3-b3cf-e163994a1857" />
+
+### Bước 3:
+Bảng chọn phần cứng hiện ra, cứ tuỳ ý chọn một dòng máy (Ví dụ: Pixel 6 hoặc Pixel 7) rồi bấm Next.
+<img width="1919" height="1079" alt="Screenshot 2026-06-08 235644" src="https://github.com/user-attachments/assets/fc59577e-1de7-4e4b-bdab-8ec71f1ea9c5" />
+
+### Bước 4:
+Bảng chọn hệ điều hành hiện ra (System Image). Ở tab Recommended, hãy bấm vào biểu tượng Mũi tên tải xuống (Download) ở cạnh một phiên bản bất kỳ (Ví dụ: Tiramisu hoặc UpsideDownCake).
+<img width="1130" height="861" alt="Screenshot 2026-06-08 235832" src="https://github.com/user-attachments/assets/09a9e40b-446b-42fd-a2d8-df086bf16f74" />
+<img width="1117" height="810" alt="Screenshot 2026-06-08 235928" src="https://github.com/user-attachments/assets/4e009150-b3a1-434e-92f1-678e3f469a63" />
+
+**Lưu ý:** Quá trình tải này khoảng 1GB, đợi một chút cho nó tải xong rồi bấm Finish.
+
+### Bước 5:
+Sau khi tải xong hệ điều hành, chọn vào nó rồi bấm Next -> Finish.
+
+### Bước 6:
+Đóng bảng Device Manager lại. Lúc này, nhìn lên thanh công cụ (ngay cạnh cái nút Run màu xanh lá ngài vừa bấm), sẽ thấy tên chiếc máy ảo vừa tạo xuất hiện. Chỉ việc bấm Run lại một lần nữa và chiêm ngưỡng thành quả của mình hiển thị trên máy ảo!
+<img width="1919" height="1079" alt="Screenshot 2026-06-09 000654" src="https://github.com/user-attachments/assets/1881c381-6a0c-47fc-8c7c-f6384f827fb9" />
+<img width="527" height="1019" alt="Screenshot 2026-06-09 000900" src="https://github.com/user-attachments/assets/ebb3e06d-9677-4a51-90ff-a8a0b3dfb95e" />
 
 ---
 
-# BƯỚC 5: CHẠY THỬ
+## CÁCH 2: Chạy trực tiếp trên điện thoại Android thật 
 
-Ứng dụng hoạt động hoàn toàn **offline**, đọc dữ liệu trực tiếp từ thư mục **Assets**, không cần kết nối Internet và đáp ứng yêu cầu xử lý dữ liệu JSON cục bộ trên Android.
+### Bước 1:
+Dùng cáp USB xịn để cắm nối điện thoại Android vào máy tính.
 
+### Bước 2:
+Cầm điện thoại lên, vào **Cài đặt -> Giới thiệu về điện thoại -> Bấm liên tục 7 lần vào dòng Số hiệu bản tạo (Build number)** cho đến khi máy báo **"Bạn đã là nhà phát triển!"**.
+
+### Bước 3:
+Quay lại màn hình Cài đặt chính, tìm mục **Tùy chọn nhà phát triển (Developer options)** vừa xuất hiện.
+
+### Bước 4:
+Tìm đến dòng **Gỡ lỗi USB (USB debugging)** và gạt nút bật nó lên.
+
+### Bước 5:
+Trên màn hình điện thoại lúc này sẽ hiện một bảng hỏi **"Cho phép gỡ lỗi USB từ máy tính này?"**, bấm **Cho phép (OK)**.
+
+### Bước 6:
+Ngước nhìn lên màn hình Android Studio, sẽ thấy tên chiếc điện thoại thật của mình hiện ra cạnh nút Run. Bấm Run và app sẽ tự động cài thẳng vào máy!
