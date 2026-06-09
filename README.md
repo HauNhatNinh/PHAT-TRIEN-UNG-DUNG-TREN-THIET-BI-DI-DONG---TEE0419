@@ -1417,3 +1417,98 @@ Trên màn hình điện thoại lúc này sẽ hiện một bảng hỏi **"Cho
 
 ### Bước 6:
 Nhìn lên màn hình Android Studio, sẽ thấy tên chiếc điện thoại thật của mình hiện ra cạnh nút Run. Bấm Run và app sẽ tự động cài thẳng vào máy!
+
+---
+
+# PHẦN 4: APP 2 - TƯƠNG ĐƯƠNG MIT APP (SỬ DỤNG ANDROID STUDIO)
+
+## Activity 1: About & Navigation
+
+Sử dụng Intent để chuyển màn hình.
+
+```java
+// Nút sang màn Toán
+findViewById(R.id.btnMath).setOnClickListener(v -> {
+    startActivity(new Intent(MainActivity.this, MathActivity.class));
+});
+
+// Nút sang màn Web
+findViewById(R.id.btnWeb).setOnClickListener(v -> {
+    startActivity(new Intent(MainActivity.this, WebActivity.class));
+});
+```
+<img width="1919" height="1079" alt="Screenshot 2026-06-09 231835" src="https://github.com/user-attachments/assets/04327a96-030d-4c6d-bbf4-db62e502022e" />
+
+---
+
+## Activity 2: Giải toán đơn giản & Gọi API
+
+Để gửi dữ liệu lên https://k58kmt.tdh.io.vn/api, cần dùng thư viện như Volley hoặc OkHttp, thêm quyền INTERNET vào Manifest.
+
+Giả sử bài toán là phương trình bậc 1 (ax+b=c). Thiết kế giao diện nhận vào a, b, c. Sau khi tính toán ra kết quả:
+
+```java
+// Đoạn code mô phỏng dùng Volley tạo JSON Post Request
+JSONObject jsonBody = new JSONObject();
+
+try {
+    jsonBody.put("app_by", "Mã_SV"); // Ví dụ mã SV hệ KMT
+
+    JSONObject input = new JSONObject();
+    input.put("a", 1);
+    input.put("b", 2);
+    input.put("c", 3);
+    input.put("name", "Ninh công tử");
+    jsonBody.put("input", input);
+
+    JSONObject output = new JSONObject();
+    output.put("ketluan", "Có 1 nghiệm");
+    output.put("nghiem", 1.0);
+    jsonBody.put("output", output);
+
+} catch (JSONException e) {
+    e.printStackTrace();
+}
+
+// Sau đó gửi jsonBody này qua phương thức POST (Dùng RequestQueue của Volley)
+// Phản hồi nhận lại sẽ ở định dạng: {"ok":1, "stt":1234}
+```
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/d5aebddb-f398-48ee-b3c6-1f8fe7d34fc4" />
+
+---
+
+## Activity 3: Web-View
+
+Thêm đối tượng WebView vào XML Layout.
+
+Trong Java code, khởi tạo và load URL có chứa mã sinh viên:
+
+```java
+WebView myWebView = findViewById(R.id.webview);
+
+// Bật JavaScript cho WebView hoạt động trơn tru
+myWebView.getSettings().setJavaScriptEnabled(true);
+
+// Đảm bảo web mở bên trong App chứ không văng ra trình duyệt ngoài
+myWebView.setWebViewClient(new WebViewClient());
+
+String masv = "12345678"; // Thay bằng mã thực tế
+
+myWebView.loadUrl("https://k58kmt.tdh.io.vn?masv=" + masv);
+```
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/6e2e032e-124c-46e0-b518-f4b50aa066ac" />
+
+---
+
+## Kết Quả
+### Giao diện ban đầu
+<img width="502" height="922" alt="Screenshot 2026-06-09 234736" src="https://github.com/user-attachments/assets/4c2bc1d8-ba01-40bc-a11c-e5d41ae728ff" />
+
+### Giao diện Giải toán & Gọi API
+<img width="530" height="1020" alt="Screenshot 2026-06-10 003622" src="https://github.com/user-attachments/assets/dbd72ee1-9064-411e-99ea-66228df5b27d" />
+
+### Giao diện Web View
+<img width="517" height="980" alt="Screenshot 2026-06-10 003647" src="https://github.com/user-attachments/assets/bba89719-9a8c-4434-a61f-73fbd567edec" />
+
+### Đã post lên https://k58kmt.tdh.io.vn/?masv= thành công
+<img width="1902" height="402" alt="Screenshot 2026-06-10 003633" src="https://github.com/user-attachments/assets/f82f40af-ac8c-4b29-aae1-78c40c3a764f" />
